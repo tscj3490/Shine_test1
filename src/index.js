@@ -24,6 +24,24 @@ class App extends React.Component {
     list
   };
 
+  handleRemovePerson = index => {
+    const updatedList = this.state.list.filter((item, i) => i !== index);
+    this.setState({
+      list: updatedList
+    });
+  };
+
+  handleAddPerson = () => {
+    const newPerson = {
+      id: faker.random.uuid(),
+      title: faker.name.findName()
+    };
+    this.setState(prevState => ({
+      list: prevState.list.concat(newPerson)
+    }));
+  }
+
+
   render() {
     return (
       <div className="App">
