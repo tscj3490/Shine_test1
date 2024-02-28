@@ -24,35 +24,37 @@ class App extends React.Component {
     list
   };
 
+  handleRemovePerson = (index) => {
+    const updatedList = this.state.list.filter((item, i) => i !== index);
+    this.setState({ list: updatedList });
+  };
+
+  handleAddPerson = () => {
+    const newPerson = {
+      id: faker.random.uuid(),
+      title: faker.name.findName()
+    };
+    this.setState(prevState => ({
+      list: prevState.list.concat(newPerson)
+    }));
+  }
+
   render() {
     return (
       <div className="App">
         <div className="list">
           {this.state.list.map((item, i) => (
             <div
-              key={i}
+              key={item.id}
               className="list_item"
-              onClick={() =>
-                this.setState({
-                  list: this.state.list.filter((item, index) => i !== index)
-                })
-              }
+              onClick={() => this.handleRemovePerson(i)}
             >
               {item.title}
             </div>
           ))}
           <div
             className="list_button"
-            onClick={() =>
-              this.setState({
-                list: this.state.list.concat([
-                  {
-                    id: faker.random.uuid(),
-                    title: faker.name.findName()
-                  }
-                ])
-              })
-            }
+            onClick={() =>this.handleAddPerson()}
           >
             add new person
           </div>
